@@ -6,61 +6,25 @@
 ************************************************
 
 ## CMD ->
-1. mkdir wordcount.py  
 
-2. mkdir input.txt 
+0. spark-shell
+1. cat >> input.txt
+   i am mudit , i am human
 
-............................................................
+2. hadoop fs -put input.txt /tmp
 
-## 3. add this programe in wordcount.py  ->
+3. val text = sc.textFile("hdfs://hmaster:9000/tmp/input.txt")
 
-from pyspark import SparkContext, SparkConf
+4. text.collect;
 
-conf = SparkConf().setAppName("WordCount")
-sc = SparkContext(conf=conf)
+5. var counts = text.flatMap(line => line.split(" "))
 
+6. counts.collect
 
-lines = sc.textFile("input.txt")
+7. val mapf = counts.map(word => (word,1))
 
+8. mapf.collect
 
-words = lines.flatMap(lambda line: line.split())
+9. val red=mapf.reduceByKey(_+_)
 
-
-word_counts = words.map(lambda word: (word, 1))
-
-
-word_counts = word_counts.reduceByKey(lambda x, y: x + y)
-
-
-word_counts_list = word_counts.collect()
-for word, count in word_counts_list:
-    print(f"{word}: {count}")
-
-
-sc.stop()
-
-.......................................................................
-
-
-## 4. add line in input.txt -> 
-
-i am mudit 
-i am human
-
-.............................................
-
-## CMD ->
-
-5. spark-submit wordcount.py
-
-
-
-
-
-
-
-
-
-
-
-
+10. red.collect
