@@ -13,6 +13,7 @@
 
 2. hadoop fs -put input.txt /tmp
 
+
 3. val text = sc.textFile("hdfs://hmaster:9000/tmp/input.txt")
 
 4. text.collect;
